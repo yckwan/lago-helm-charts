@@ -12,28 +12,30 @@ metadata:
 spec:
   ingressClassName: {{ .Values.global.ingress.className }}
   tls:
-  - hosts:
-    - {{ .Values.global.ingress.frontHostname }}
-    secretName: {{ .Release.Name }}-ingress-secret
-    - {{ .Values.global.ingress.apiHostname }}
-    secretName: {{ .Release.Name }}-api-ingress-secret
+    - hosts:
+        - {{ .Values.global.ingress.frontHostname }}
+      secretName: {{ .Release.Name }}-ingress-secret
+    - hosts:
+        - {{ .Values.global.ingress.apiHostname }}
+      secretName: {{ .Release.Name }}-api-ingress-secret
   rules:
-  - host: {{ .Values.global.ingress.frontHostname }}
-    http:
-      paths:
-      - pathType: ImplementationSpecific
-        backend:
-          service:
-            name: {{ .Release.Name }}-front-svc
-            port:
-              number: {{ .Values.front.service.port }}
-  - host: {{ .Values.global.ingress.apiHostname }}
-    http:
-      paths:
-      - pathType: ImplementationSpecific
-        backend:
-          service:
-            name: {{ .Release.Name }}-api-svc
-            port:
-              number: {{ .Values.api.service.port }}
+    - host: {{ .Values.global.ingress.frontHostname }}
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-front-svc
+                port:
+                  number: {{ .Values.front.service.port }}
+    - host: {{ .Values.global.ingress.apiHostname }}
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-api-svc
+                port:
+                  number: {{ .Values.api.service.port }}
 {{ end }}
+
